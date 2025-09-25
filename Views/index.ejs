@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Document</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+  <% if (error) { %>
+    <h2><%= error %></h2>
+  <% } else { %>
+    <h1><%= name %></h1>
+    <img src="<%= heroImg %>" alt="Hero-Image" />
+    <div class="powerStats">
+      <ul>
+        <% Object.entries(powerstats).forEach(([key, value]) => { %>
+          <li>
+            <span class="stat-name"><%= key %></span>
+            <span class="progress-bar" style="--stat-value:<%= value %>"></span>
+            <span class="value"><%= value %></span>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+</div>
+</body>
+</html>

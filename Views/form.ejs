@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Choose the Hero</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="form-container">
+    <h1>Choose the Hero</h1>
+    <form action="/" method="post" autocomplete="off">
+      <input type="text" id="heroNameInput" name="heroName" placeholder="Enter hero name" required />
+      <div id="suggestions"></div>
+      <button type="submit">Show Hero</button>
+    </form>
+  </div>
+
+  <script>
+  let heroes = [];
+
+  fetch('https://akabab.github.io/superhero-api/api/all.json')
+    .then(res => res.json())
+    .then(data => {
+      heroes = data.map(h => h.name);
+    });
+
+  const input = document.getElementById('heroNameInput');
+  const suggestions = document.getElementById('suggestions');
+
+  input.addEventListener('input', () => {
+    const val = input.value.toLowerCase();
+    suggestions.innerHTML = '';
+    if (val.length < 2) {
+      suggestions.style.display = 'none';
+      return;
+    }
+
+    const filtered = heroes.filter(name => name.toLowerCase().includes(val)).slice(0, 10);
+
+    if (filtered.length > 0) {
+      filtered.forEach(name => {
+        const div = document.createElement('div');
+        div.textContent = name;
+        div.onclick = () => {
+          input.value = name;
+          suggestions.style.display = 'none';
+        };
+        suggestions.appendChild(div);
+      });
+      suggestions.style.display = 'block';
+    } else {
+      suggestions.style.display = 'none';
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (e.target !== input) {
+      suggestions.style.display = 'none';
+    }
+  });
+  </script>
+</body>
+</html>
