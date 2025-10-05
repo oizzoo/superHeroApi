@@ -7,24 +7,37 @@
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div class="container">
-  <% if (error) { %>
-    <h2><%= error %></h2>
-  <% } else { %>
-    <h1><%= name %></h1>
-    <img src="<%= heroImg %>" alt="Hero-Image" />
-    <div class="powerStats">
-      <ul>
-        <% Object.entries(powerstats).forEach(([key, value]) => { %>
-          <li>
-            <span class="stat-name"><%= key %></span>
-            <span class="progress-bar" style="--stat-value:<%= value %>"></span>
-            <span class="value"><%= value %></span>
-          </li>
-        <% }) %>
-      </ul>
+<div class="main-box">
+  <div class="flex-container">
+    <div class="form-container">
+      <h1>Choose the Hero</h1>
+      <form action="/" method="post" autocomplete="off">
+        <input type="text" id="heroNameInput" name="heroName" placeholder="Enter hero name" required />
+        <div id="suggestions"></div>
+        <button type="submit">Show Hero</button>
+      </form>
     </div>
-  <% } %>
+    <div class="container">
+      <% if (error) { %>
+        <h2><%= error %></h2>
+      <% } else { %>
+        <h1><%= name %></h1>
+        <img src="<%= heroImg %>" alt="Hero-Image" />
+        <div class="powerStats">
+          <ul>
+            <% Object.entries(powerstats).forEach(([key, value]) => { %>
+              <li>
+                <span class="stat-name"><%= key %></span>
+                <span class="progress-bar" style="--stat-value:<%= value %>"></span>
+                <span class="value"><%= value %></span>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
+    </div>
+  </div>
 </div>
+<script src="/js/searchForHero.js"></script>
 </body>
 </html>
